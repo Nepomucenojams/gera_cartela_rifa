@@ -1,0 +1,86 @@
+<?php 
+$codigo = isset($_GET['codigo']) ? $_GET['codigo'] : ''; 
+$dono = '';
+$data = '';
+
+if (isset($this->view->donoRifa )) {
+    $dono = $this->view->donoRifa;
+    $data = $this->view->data;
+}
+?>
+<div class="row">
+    <div class="col-md-6">
+    <div class="row">
+        <div class="col-md">
+        <form method="POST" action="/verificarResultado">
+        <div class="form-group">
+            <label for="codigo">Número da rifa:</label>
+            <input type="text" required class="form-control w-50" maxlength="50" value="<?= $codigo?>"  name="codigo" id="codigo" placeholder="">
+        </div>
+        <button type="submit" class="btn btn-primary">Validar sorteio</button>
+        </form>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+        <div>
+            <h3 class="text-dark">Resultado: </h3> 
+            Rifa criada por: <?=  $dono ?> <br>
+            Criada em: <?=  $data ?>
+            <hr>
+            <?php 
+            $i=0;
+
+            if(isset($this->view->resultado)){
+            foreach ($this->view->resultado as $resultado => $v) { 
+                $i++;
+                if ($resultado < 1 ) {
+                    $i--;
+                    continue;
+                } ?>
+                <h3> <?=$i?>º <?= $v  ?></h3>
+           <?php }} ?>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+    //validando tipo de caixa
+
+    $('#tipo').change(function (){        
+        $("#tipo option:selected").each(function(){
+            let tipo = $(this).val()
+            if (tipo == 'nomes') {
+                $('#caixaTipoNome').removeClass('d-none')
+            }
+            if (tipo == 'numeros') {
+                $('#caixaTipoNome').addClass('d-none')
+            }
+        })
+    });
+    
+
+    //Controle do tipo de nome
+    $("#quantidade").change(function(){
+        let quantidade = $(this).val()
+
+        console.log(quantidade);
+        if (quantidade <= 100) {
+            $("#selectComida").removeClass('d-none')
+        }
+        if(quantidade > 100){
+            $("#selectComida").addClass('d-none')
+        }
+
+        if(quantidade <= 400) {
+            $("#selectPersonagem").removeClass('d-none')
+        }
+        if(quantidade > 400){
+            $("#selectPersonagem").addClass('d-none')
+        }
+    });
+    
+</script>

@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md">
+    <form method="POST" action="baixar">
+    <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" required class="form-control" maxlength="50"  name="email" id="email" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="nome">Nome da rifa:</label>
+        <input type="text" required class="form-control" maxlength="50"  name="nome" id="nome" placeholder="">
+    </div>
+    <div class="form-group">
+        <label for="premio">Prêmio:</label>
+        <input type="text" required class="form-control" maxlength="140" name="premio" id="premio" placeholder="">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+        <label for="valor">Valor:</label>
+        <input type="text" required class="form-control" value="" id="valor" name="valor" id="quantidade" min="1"  max="1000">
+        </div>
+        <div class="form-group col-md-3">
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" required value="10" class="form-control" name="quantidade" id="quantidade" min="1"  max="1000">
+        </div>
+        <div class="form-group col-md-3">
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" class="form-control">
+            <option selected value="numeros">numeros</option>
+            <option value="nomes">nomes</option>
+        </select>
+        </div>
+        <div id="caixaTipoNome" class="form-group col-md-3 d-none">
+            <label for="inputState">Tipo de nomes:</label>
+            <select id="inputState" name="tipoQuantidade" class="form-control">
+                <option id="selectPersonagem" value="nomespop" >Personagens 1/400</option>
+                <option value="nomesbrasileiros" selected>Brasileiros 1/1000</option>
+                <option id="selectComida" value="comidas">Comidas 1/100</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="nome">Chave para sorteio:</label>
+        <input type="number"  name="senha" readonly class="form-control" value="<?= rand(1000,9999) ?>" maxlength="50"  name="nome" id="nome" placeholder="">
+        Anote a sua chave para realização do sorteio no nosso sistema
+    </div>
+    <button type="submit" class="btn btn-primary">GERAR RIFA</button>
+    </form>
+    </div>
+</div>
+<script>
+
+    
+    //validando tipo de caixa
+
+    $('#tipo').change(function (){        
+        $("#tipo option:selected").each(function(){
+            let tipo = $(this).val()
+            if (tipo == 'nomes') {
+                $('#caixaTipoNome').removeClass('d-none')
+            }
+            if (tipo == 'numeros') {
+                $('#caixaTipoNome').addClass('d-none')
+            }
+        })
+    });
+    
+
+    //Controle do tipo de nome
+    $("#quantidade").change(function(){
+        let quantidade = $(this).val()
+
+        console.log(quantidade);
+        if (quantidade <= 100) {
+            $("#selectComida").removeClass('d-none')
+        }
+        if(quantidade > 100){
+            $("#selectComida").addClass('d-none')
+        }
+
+        if(quantidade <= 400) {
+            $("#selectPersonagem").removeClass('d-none')
+        }
+        if(quantidade > 400){
+            $("#selectPersonagem").addClass('d-none')
+        }
+    });
+    
+</script>
